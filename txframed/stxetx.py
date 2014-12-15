@@ -100,7 +100,7 @@ class STXETXProtocol(Protocol):
             sendbuff.append(self._lrc(sendbuff))
         return self.transport.writeSequence(sendbuff)
 
-    def lineLengthExceeded(self, line):
+    def msgLengthExceeded(self, line):
         """Called when the maximum line length has been reached.
         Override if it needs to be dealt with in some special way.
         """
