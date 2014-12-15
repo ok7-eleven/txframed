@@ -1,4 +1,5 @@
 from twisted.internet.protocol import Protocol
+from twisted.internet import error
 
 WAITFORSTART = 0
 WAITFORETX = 1
