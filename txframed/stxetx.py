@@ -1,4 +1,4 @@
-from twisted.internet.protocol import BaseProtocol
+from twisted.internet.protocol import Protocol
 
 WAITFORSTART = 0
 WAITFORETX = 1
@@ -9,7 +9,7 @@ ETX = '\x03'
 ACK = '\x06'
 NAK = '\x15'
 
-class STXETXProtocol(BaseProtocol):
+class STXETXProtocol(Protocol):
     """
     @cvar _lrc: Method to calculate LRC, a single byte for a fixed LRC, or None for no LRC
 
