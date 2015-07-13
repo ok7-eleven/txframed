@@ -37,6 +37,24 @@ class STXETXBasicTestCase(unittest.TestCase):
         self.assertEqual(self.tr.value(), '\x02testcase5\x03')
 
 
+class STXETXLongLineTester(STXETXBasicTester):
+    MAX_LENGTH = 10
+
+    def msgLengthExceeded(self, line):
+        self.received.append(line)
+
+class STXETXLongLinetestFactory(protocol.Factory):
+    protocol = STXETXLongLineTester
+
+class STXETXLongLineTestCase(STXETXBasicTestCase):
+    factory = STXETXLongLinetestFactory
+
+    def test_incoming(self):
+        excessive = 'A' * (self.proto.MAX_LENGTH * 2 + 2)
+        self.proto.dataReceived('\x02' +  excessive + '\x03')
+        self.assertEqual(self.proto.received, ['\x02' + excessive[:self.proto.MAX_LENGTH]])
+
+
 class STXETXStringLRCTester(STXETXBasicTester):
     lrc = '\x10'
 
