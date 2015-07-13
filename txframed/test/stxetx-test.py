@@ -1,5 +1,5 @@
 from twisted.internet import protocol
-from txframed.stxetx import STXETXProtocol
+from txframed.framed import STXETXProtocol
 
 from twisted.trial import unittest
 from twisted.test import proto_helpers
@@ -38,7 +38,7 @@ class STXETXBasicTestCase(unittest.TestCase):
 
 
 class STXETXStringLRCTester(STXETXBasicTester):
-    _lrc = '\x10'
+    lrc = '\x10'
 
     def lrcFail(self, msg, lrc):
         self.received.append('LRCFAIL')
@@ -61,7 +61,8 @@ class STXETXStringLRCTestCase(STXETXBasicTestCase):
 
 
 class STXETXCallableLRCTester(STXETXStringLRCTester):
-    def _lrc(self, msg):
+    lrclen = 1
+    def lrc(self, msg):
         return '?'
 
 class STXETXCallableLRCtestFactory(protocol.Factory):
@@ -71,7 +72,7 @@ class STXETXCallableLRCTestCase(STXETXStringLRCTestCase):
     factory = STXETXCallableLRCtestFactory
 
     def test_callable(self):
-        self.assertEqual(type(self.proto._lrc), "<type 'function'>")
+        self.assertTrue(callable(self.proto.lrc))
 
     def test_incoming(self):
         self.proto.dataReceived('\x02testcase')
