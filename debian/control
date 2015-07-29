@@ -1,0 +1,12 @@
+Source: txframed
+Maintainer: Michael Mattice <mmattice@ok7-eleven.com>
+Section: python
+Priority: optional
+Build-Depends: python-all (>= 2.6.6-3), debhelper (>= 7)
+Standards-Version: 3.9.1
+
+Package: python-txframed
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Description: Twisted Python Framed Protocol Support
+
